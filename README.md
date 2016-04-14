@@ -15,7 +15,7 @@ All dependencies are in the package.json file. Use the following command to inst
 Working on documenting the routes.
 
 ## License
-MIT License
+<a href="https://github.com/davidlamt/antfinder-api/blob/master/LICENSE" target="_blank">MIT License</a>
 
 ## Author
-David Tran
+<a href="http://davidtranscend.com/" target="_blank">David Tran</a>
