@@ -1,14 +1,14 @@
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import express from 'express';
-import path from 'path';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import path from 'path';
 import session from 'express-session';
 
 require('dotenv').config();
 
-var mongoose = require('mongoose');
 mongoose.connect(process.env.DB_INFO);
 
 // var routes = require('./routes/index');
