@@ -34,6 +34,20 @@ router.get('/:id', adminAuth, (req, res) => {
     }, () => res.sendStatus(404));
 });
 
+router.put('/', userAuth, (req, res) => {
+    const { password } = req.body;
+
+    encryptUtils.encryptPassword(password).then((hashedPassword) => {
+        const newUserInfo = { password: hashedPassword };
+
+        userUtils.updateUser(req.session.user._id, newUserInfo).then((updatedUser) => {
+            req.session.user.password = hashedPassword;
+
+            res.json(updatedUser);
+        }, () => res.sendStatus(404));
+    }, () => res.sendStatus(500));
+});
+
 router.put('/:id', adminAuth, (req, res) => {
     const userID = req.params.id;
     const { first_name, last_name, email, username, password } = req.body;
@@ -43,14 +57,22 @@ router.put('/:id', adminAuth, (req, res) => {
 
         userUtils.updateUser(userID, newUserInfo).then((updatedUser) => {
             const { _id, created_at, status } = req.session.user;
+
             req.session.user = newUserInfo;
             req.session.user._id = _id;
             req.session.user.created_at = created_at;
             req.session.user.status = status;
-            console.log(req.session);
+
             res.json(updatedUser);
-        }, (err) => res.sendStatus(404));
+        }, () => res.sendStatus(404));
     }, () => res.sendStatus(500));
+});
+
+router.delete('/', userAuth, (req, res) => {
+    userUtils.deleteUser(req.session.user._id).then(deletedUser => {
+        req.session.destroy();
+        res.json(deletedUser);
+    }, () => res.sendStatus(404));
 });
 
 router.delete('/:id', adminAuth, (req, res) => {
