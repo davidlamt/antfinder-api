@@ -6,7 +6,7 @@ import userUtils from '../utilities/users_service.js';
 import { userAuth, adminAuth } from '../auth/auth';
 
 router.post('/', (req, res) => {
-    res.send('POST /users');
+    res.send(req.body);
 });
 
 router.get('/', adminAuth, (req, res) => {
