@@ -13,15 +13,18 @@ router.post('/', (req, res) => {
         const newUser = { first_name, last_name, email, username, password: hashedPassword };
 
         userUtils.createUser(newUser).then((createdUser) => {
+            req.session.username = createdUser.username;
+            req.session.status = createdUser.status;
+
             res.json(createdUser);
         }, () => res.sendStatus(400));
     }, () => res.sendStatus(500));
 });
 
 router.get('/', adminAuth, (req, res) => {
-  userUtils.getUsers().then((users) => {
-      res.json(users);
-  }, () => res.sendStatus(404));
+    userUtils.getUsers().then((users) => {
+        res.json(users);
+    }, () => res.sendStatus(404));
 });
 
 router.get('/:id', adminAuth, (req, res) => {
