@@ -35,8 +35,17 @@ router.get('/:id', adminAuth, (req, res) => {
     }, () => res.sendStatus(404));
 });
 
-router.put('/:id', userAuth, (req, res) => {
+router.put('/:id', (req, res) => {
+    const userID = req.params.id;
+    const { first_name, last_name, email, username, password } = req.body;
 
+    encryptUtils.encryptPassword(password).then((hashedPassword) => {
+        const newUserInfo = { first_name, last_name, email, username, password: hashedPassword };
+
+        userUtils.updateUser(userID, newUserInfo).then((updatedUser) => {
+            res.json(updatedUser);
+        }, (err) => res.sendStatus(400));
+    }, () => res.sendStatus(500));
 });
 
 module.exports = router;

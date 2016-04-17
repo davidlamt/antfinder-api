@@ -30,8 +30,8 @@ usersUtils.getUser = (userID) => {
 };
 
 usersUtils.updateUser = (userID, updatedUserInfo) => {
-    usersModel.findByIdAndUpdate(userId, updatedUserInfo, (err, updatedUser) => {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        usersModel.findByIdAndUpdate(userID, updatedUserInfo, (err, updatedUser) => {
             if (err || updatedUser.length === 0) reject();
             resolve(updatedUser);
         });
