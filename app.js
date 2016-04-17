@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 import path from 'path';
 import session from 'express-session';
 
+const mongoStore = require('connect-mongo')(session);
+
 require('dotenv').config();
 
 mongoose.connect(process.env.DB_INFO);
@@ -27,8 +29,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true,
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection,
+        collection: 'sessions'
+    })
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
