@@ -68,6 +68,13 @@ router.put('/:id', adminAuth, (req, res) => {
     }, () => res.sendStatus(500));
 });
 
+router.delete('/', userAuth, (req, res) => {
+    userUtils.deleteUser(req.session.user._id).then(deletedUser => {
+        req.session.destroy();
+        res.json(deletedUser);
+    }, () => res.sendStatus(404));
+});
+
 router.delete('/:id', adminAuth, (req, res) => {
     const userID = req.params.id;
 
