@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', (req, res) => {
-  res.send('respond with a resource');
+import { userAuth, adminAuth } from '../auth/auth';
+
+router.get('/', adminAuth, (req, res) => {
+  res.send('GET /users');
+});
+
+router.post('/', (req, res) => {
+    res.send('POST /users');
 });
 
 module.exports = router;

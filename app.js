@@ -7,8 +7,6 @@ import mongoose from 'mongoose';
 import path from 'path';
 import session from 'express-session';
 
-import { userAuth, adminAuth } from './auth/auth';
-
 require('dotenv').config();
 
 mongoose.connect(process.env.DB_INFO);
