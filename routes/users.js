@@ -1,14 +1,30 @@
 var express = require('express');
 var router = express.Router();
 
-import { userAuth, adminAuth } from '../auth/auth';
+import userUtils from '../utilities/users_service.js';
 
-router.get('/', adminAuth, (req, res) => {
-  res.send('GET /users');
-});
+import { userAuth, adminAuth } from '../auth/auth';
 
 router.post('/', (req, res) => {
     res.send('POST /users');
+});
+
+router.get('/', adminAuth, (req, res) => {
+  userUtils.getUsers().then((users) => {
+      res.json(users);
+  }, () => {
+      res.send(404);
+  });
+});
+
+router.get('/:id', adminAuth, (req, res) => {
+    const userID = req.params.id;
+
+    userUtils.getUser(userID).then((user) => {
+        res.json(user);
+    }, () => {
+        res.send(404);
+    });
 });
 
 module.exports = router;

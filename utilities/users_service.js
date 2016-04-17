@@ -4,40 +4,46 @@ const usersUtils = {};
 
 usersUtils.createUser = (newUser) => {
     usersModel.create(newUser, (err, createdUser) => {
-        if (err || createdUser.length === 0) reject();
-        resolve(createdUser);
+        return new Promise((resolve, reject) => {
+            if (err || createdUser.length === 0) reject();
+            resolve(createdUser);
+        })
     });
 };
 
 usersUtils.getUsers = () => {
-    usersModel.find({}, (err, users) => {
-        return new Promise(resolve, reject) {
+    return new Promise((resolve, reject) => {
+        usersModel.find({}, (err, users) => {
             if (err || users.length === 0) reject();
             resolve(users);
-        };
+        });
     });
 };
 
 usersUtils.getUser = (userID) => {
-    usersModel.findById(userId, (err, user) => {
-        return new Promise(resolve, reject) {
-            if (err | user.length === 0) reject();
+    return new Promise((resolve, reject) => {
+        usersModel.findById(userID, (err, user) => {
+            if (err || user.length === 0) reject();
             resolve(user);
-        };
+        });
     });
 };
 
 usersUtils.updateUser = (userID, updatedUserInfo) => {
     usersModel.findByIdAndUpdate(userId, updatedUserInfo, (err, updatedUser) => {
-        if (err || updatedUser.length === 0) reject();
-        resolve(updatedUser);
+        return new Promise((resolve, reject) => {
+            if (err || updatedUser.length === 0) reject();
+            resolve(updatedUser);
+        });
     });
 };
 
-usersUtil.deleteUser = (userID) => {
+usersUtils.deleteUser = (userID) => {
     usersModel.findByIdAndRemove(userID, (err, deletedUser) => {
-        if (err || deletedUser.length === 0) reject();
-        resolve(deletedUser);
+        return new Promise((resolve, reject) => {
+            if (err || deletedUser.length === 0) reject();
+            resolve(deletedUser);
+        });
     });
 };
 
