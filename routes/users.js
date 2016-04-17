@@ -35,7 +35,7 @@ router.get('/:id', adminAuth, (req, res) => {
     }, () => res.sendStatus(404));
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', userAuth, (req, res) => {
     const userID = req.params.id;
     const { first_name, last_name, email, username, password } = req.body;
 
