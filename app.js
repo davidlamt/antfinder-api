@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 import express from 'express';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
@@ -25,7 +25,12 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', routes);
