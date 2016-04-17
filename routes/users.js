@@ -35,4 +35,8 @@ router.get('/:id', adminAuth, (req, res) => {
     }, () => res.sendStatus(404));
 });
 
+router.put('/:id', userAuth, (req, res) => {
+
+});
+
 module.exports = router;
