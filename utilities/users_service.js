@@ -3,11 +3,11 @@ import usersModel from '../models/users_model';
 const usersUtils = {};
 
 usersUtils.createUser = (newUser) => {
-    usersModel.create(newUser, (err, createdUser) => {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        usersModel.create(newUser, (err, createdUser) => {
             if (err || createdUser.length === 0) reject();
             resolve(createdUser);
-        })
+        });
     });
 };
 
