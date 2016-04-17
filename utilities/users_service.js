@@ -5,7 +5,7 @@ const usersUtils = {};
 usersUtils.createUser = (newUser) => {
     return new Promise((resolve, reject) => {
         usersModel.create(newUser, (err, createdUser) => {
-            if (err || createdUser.length === 0) reject();
+            if (err || !createdUser || createdUser.length === 0) reject();
             resolve(createdUser);
         });
     });
@@ -14,7 +14,7 @@ usersUtils.createUser = (newUser) => {
 usersUtils.getUsers = () => {
     return new Promise((resolve, reject) => {
         usersModel.find({}, (err, users) => {
-            if (err || users.length === 0) reject();
+            if (err || !users || users.length === 0) reject();
             resolve(users);
         });
     });
@@ -23,7 +23,7 @@ usersUtils.getUsers = () => {
 usersUtils.getUser = (userID) => {
     return new Promise((resolve, reject) => {
         usersModel.findById(userID, (err, user) => {
-            if (err || user.length === 0) reject();
+            if (err || !user || user.length === 0) reject();
             resolve(user);
         });
     });
@@ -32,7 +32,8 @@ usersUtils.getUser = (userID) => {
 usersUtils.updateUser = (userID, updatedUserInfo) => {
     return new Promise((resolve, reject) => {
         usersModel.findByIdAndUpdate(userID, updatedUserInfo, (err, updatedUser) => {
-            if (err || updatedUser.length === 0) reject();
+
+            if (err || !updatedUser || updatedUser.length === 0) reject();
             resolve(updatedUser);
         });
     });
@@ -41,7 +42,8 @@ usersUtils.updateUser = (userID, updatedUserInfo) => {
 usersUtils.deleteUser = (userID) => {
     return new Promise((resolve, reject) => {
         usersModel.findByIdAndRemove(userID, (err, deletedUser) => {
-            if (err || deletedUser.length === 0) reject();
+            console.log(deletedUser);
+            if (err || !deletedUser || deletedUser.length === 0) reject();
             resolve(deletedUser);
         });
     });
