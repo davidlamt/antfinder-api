@@ -1,27 +1,27 @@
 var express = require('express');
 var router = express.Router();
 
+import encryptUtils from '../utilities/encrypt';
 import userUtils from '../utilities/users_service.js';
 
-import { userAuth, adminAuth } from '../auth/auth';
+import { userAuth, adminAuth } from '../utilities/auth';
 
 router.post('/', (req, res) => {
     const { first_name, last_name, email, username, password } = req.body;
-    const newUser = { first_name, last_name, email, username, password };
 
-    userUtils.createUser(newUser).then((createdUser) => {
-        res.json(createdUser);
-    }, () => {
-        res.send(400); // Bad request
-    });
+    encryptUtils.encryptPassword(password).then((hashedPassword) => {
+        const newUser = { first_name, last_name, email, username, password: hashedPassword };
+
+        userUtils.createUser(newUser).then((createdUser) => {
+            res.json(createdUser);
+        }, () => res.sendStatus(400));
+    }, () => res.sendStatus(500));
 });
 
 router.get('/', adminAuth, (req, res) => {
   userUtils.getUsers().then((users) => {
       res.json(users);
-  }, () => {
-      res.send(404); // Not found
-  });
+  }, () => res.sendStatus(404));
 });
 
 router.get('/:id', adminAuth, (req, res) => {
@@ -29,9 +29,7 @@ router.get('/:id', adminAuth, (req, res) => {
 
     userUtils.getUser(userID).then((user) => {
         res.json(user);
-    }, () => {
-        res.send(404); // Not found
-    });
+    }, () => res.sendStatus(404));
 });
 
 module.exports = router;
