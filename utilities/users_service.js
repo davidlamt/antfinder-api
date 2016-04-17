@@ -39,8 +39,8 @@ usersUtils.updateUser = (userID, updatedUserInfo) => {
 };
 
 usersUtils.deleteUser = (userID) => {
-    usersModel.findByIdAndRemove(userID, (err, deletedUser) => {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        usersModel.findByIdAndRemove(userID, (err, deletedUser) => {
             if (err || deletedUser.length === 0) reject();
             resolve(deletedUser);
         });

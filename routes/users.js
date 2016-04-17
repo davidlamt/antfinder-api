@@ -48,4 +48,12 @@ router.put('/:id', userAuth, (req, res) => {
     }, () => res.sendStatus(500));
 });
 
+router.delete('/:id', (req, res) => {
+    const userID = req.params.id;
+
+    userUtils.deleteUser(userID).then((deletedUser) => {
+        res.json(deletedUser);
+    }, () => res.sendStatus(404));
+});
+
 module.exports = router;
