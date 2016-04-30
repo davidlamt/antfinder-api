@@ -13,9 +13,10 @@ require('dotenv').config();
 
 mongoose.connect(process.env.DB_INFO);
 
-const users = require('./routes/users');
+const authenticate = require('./routes/authenticate');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
+const users = require('./routes/users');
 
 var app = express();
 
@@ -40,9 +41,10 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', users);
+app.use('/authenticate', authenticate);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

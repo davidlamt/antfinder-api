@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', (req, res) => {
-    if (req.session.user) {
-        req.session.destroy();
-        return res.sendStatus(200);
-    }
+    console.log(req.session.user);
+    if (req.session.user) return res.sendStatus(200);
 
     res.sendStatus(404);
 });
