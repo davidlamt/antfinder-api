@@ -15,6 +15,7 @@ mongoose.connect(process.env.DB_INFO);
 
 const users = require('./routes/users');
 const login = require('./routes/login');
+const logout = require('./routes/logout');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
 app.use('/login', login);
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
