@@ -39,6 +39,7 @@ app.use(session({
 }));
 app.use(cors({
     allowedOrigins: [
+        'antfinder.herokuapp.com',
         'localhost:3001'
     ]
 }));
