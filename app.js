@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'express-cors';
-import favicon from 'serve-favicon';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import path from 'path';
@@ -26,8 +25,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +39,7 @@ app.use(session({
 }));
 app.use(cors({
     allowedOrigins: [
+        'antfinder.herokuapp.com',
         'localhost:3001'
     ]
 }));
