@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
-// import cookieParser from 'cookie-parser';
 import express from 'express';
+import cors from 'express-cors';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
 import mongoose from 'mongoose';
@@ -16,6 +16,7 @@ mongoose.connect(process.env.DB_INFO);
 const authenticate = require('./routes/authenticate');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
+const user = require('./routes/user');
 const users = require('./routes/users');
 
 var app = express();
@@ -29,7 +30,6 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
@@ -39,11 +39,17 @@ app.use(session({
         collection: 'sessions'
     })
 }));
+app.use(cors({
+    allowedOrigins: [
+        'localhost:3001'
+    ]
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', authenticate);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/user', user);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

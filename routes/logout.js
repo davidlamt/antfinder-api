@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', (req, res) => {
+import { userAuth } from '../utilities/auth';
+
+router.get('/', userAuth, (req, res) => {
     if (req.session.user) {
         req.session.destroy();
         return res.sendStatus(200);
