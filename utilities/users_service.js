@@ -29,6 +29,15 @@ usersUtils.getUser = (userID) => {
     });
 };
 
+usersUtils.getUserByUsername = username => {
+    return new Promise((resolve, reject) => {
+        usersModel.find({ username }, (err, user) => {
+            if (err || !user || user.length === 0) reject();
+            resolve(user);
+        });
+    });
+};
+
 usersUtils.updateUser = (userID, updatedUserInfo) => {
     return new Promise((resolve, reject) => {
         usersModel.findByIdAndUpdate(userID, updatedUserInfo, (err, updatedUser) => {
