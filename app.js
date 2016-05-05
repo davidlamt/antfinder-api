@@ -7,11 +7,17 @@ import path from 'path';
 import session from 'express-session';
 
 const mongoStore = require('connect-mongo')(session);
+let allowedOrigins = [];
 
 require('dotenv').config();
 
-if (process.env.NODE_ENV === 'production') mongoose.connect(process.env.DB_INFO);
-else mongoose.connect('mongodb://localhost/antfinder');
+if (process.env.NODE_ENV === 'production') {
+    mongoose.connect(process.env.DB_INFO);
+    allowedOrigins.push('antfinder.herokuapp.com');
+} else {
+    mongoose.connect('mongodb://localhost/antfinder');
+    allowedOrigins.push('localhost:3001');
+}
 
 const authenticate = require('./routes/authenticate');
 const login = require('./routes/login');
@@ -40,12 +46,7 @@ app.use(session({
         collection: 'sessions'
     })
 }));
-app.use(cors({
-    allowedOrigins: [
-        'antfinder.herokuapp.com',
-        'localhost:3001'
-    ]
-}));
+app.use(cors({ allowedOrigins }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', authenticate);
