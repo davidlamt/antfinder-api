@@ -11,7 +11,7 @@ const mongoStore = require('connect-mongo')(session);
 require('dotenv').config();
 
 if (process.env.NODE_ENV === 'production') mongoose.connect(process.env.DB_INFO);
-else mongoose.connect('localhost:3000/antfinder');
+else mongoose.connect('mongodb://localhost/antfinder');
 
 const authenticate = require('./routes/authenticate');
 const login = require('./routes/login');
