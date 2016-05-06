@@ -35,17 +35,19 @@ router.get('/:id', adminAuth, (req, res) => {
 });
 
 router.put('/', userAuth, (req, res) => {
-    const { password } = req.body;
+    const { oldPassword, password } = req.body;
 
-    encryptUtils.encryptPassword(password).then((hashedPassword) => {
-        const newUserInfo = { password: hashedPassword };
+    encryptUtils.comparePassword(oldPassword, req.session.user[0].password).then(() => {
+        encryptUtils.encryptPassword(password).then((hashedPassword) => {
+            const newUserInfo = { password: hashedPassword };
 
-        userUtils.updateUser(req.session.user[0]._id, newUserInfo).then((updatedUser) => {
-            req.session.user.password = hashedPassword;
+            userUtils.updateUser(req.session.user[0]._id, newUserInfo).then((updatedUser) => {
+                req.session.user.password = hashedPassword;
 
-            res.json(updatedUser);
-        }, () => res.sendStatus(404));
-    }, () => res.sendStatus(500));
+                res.json(updatedUser);
+            }, () => res.sendStatus(404));
+        }, () => res.sendStatus(500));
+    }, () => res.sendStatus(401));
 });
 
 router.put('/:id', adminAuth, (req, res) => {
