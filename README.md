@@ -2,7 +2,7 @@
 The API used by the AntFinder application.
 
 ## Version
-**0.5**
+**0.6**
 
 ## Demo
 Working on building the API.
