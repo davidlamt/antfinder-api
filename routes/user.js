@@ -11,8 +11,8 @@ router.get('/', userAuth, (req, res) => {
         else user = req.session.user[0];
     }
 
-    const { first_name: firstName, last_name: lastName, email, username, created_at: createdAt } = user;
-    const nonPrivateUserInfo = { firstName, lastName, email, username, createdAt };
+    const { first_name: firstName, last_name: lastName, email, username, status, created_at: createdAt } = user;
+    const nonPrivateUserInfo = { firstName, lastName, email, username, status, createdAt };
 
     res.json(nonPrivateUserInfo);
 });

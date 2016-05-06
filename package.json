@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./bin/www",
+    "deploy": "git add . && git commit -am \"Prepare for heroku deployment\" && git push heroku deployment:master -f",
     "dev": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
