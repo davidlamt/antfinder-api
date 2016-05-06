@@ -40,7 +40,7 @@ router.put('/', userAuth, (req, res) => {
     encryptUtils.encryptPassword(password).then((hashedPassword) => {
         const newUserInfo = { password: hashedPassword };
 
-        userUtils.updateUser(req.session.user._id, newUserInfo).then((updatedUser) => {
+        userUtils.updateUser(req.session.user[0]._id, newUserInfo).then((updatedUser) => {
             req.session.user.password = hashedPassword;
 
             res.json(updatedUser);
