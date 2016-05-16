@@ -36,10 +36,10 @@ router.get('/current_user', userAuth, (req, res) => {
     }, err => res.sendStatus(404));
 });
 
-router.get('/:id', adminAuth, (req, res) => {
+router.get('/:id', userAuth, (req, res) => {
     const listingID = req.params.id;
 
-    listingUtils.getListing(listingID).then(listing => {
+    listingUtils.getListingAndUpdateViewCount(listingID).then(listing => {
         res.json(listing)
     }, () => res.sendStatus(404));
 });

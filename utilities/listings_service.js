@@ -38,4 +38,13 @@ listingUtils.getListing = listingID => {
     });
 };
 
+listingUtils.getListingAndUpdateViewCount = listingID => {
+    return new Promise((resolve, reject) => {
+        listingsModel.findByIdAndUpdate(listingID, { $inc: { 'views': 1 } }, (err, listing) => {
+            if (err || !listing || listing.length === 0) reject(err);
+            resolve(listing);
+        });
+    });
+};
+
 export default listingUtils;
