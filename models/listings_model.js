@@ -7,7 +7,7 @@ const listingSchema = new Schema({
     price: { type: Number, required: true },
     contact: { type: String, required: true },
     listing_type: { type: String, enum: ['Book', 'Phone', 'Car', 'Misc'], required: true },
-    creator: { type: Number, required: true },
+    creator: { type: String, required: true },
     created_at: {type: Number, default: Date.now, required: true }
 });
 
