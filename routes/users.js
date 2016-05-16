@@ -13,7 +13,6 @@ router.post('/', (req, res) => {
         const newUser = { first_name, last_name, email, username, password: hashedPassword };
 
         userUtils.createUser(newUser).then((createdUser) => {
-            req.session.user = createdUser;
 
             res.json(createdUser);
         }, () => res.sendStatus(400));
