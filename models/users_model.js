@@ -7,7 +7,7 @@ const userSchema = new Schema({
     username: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     listings: [Number],
-    status: { type: String, enum: ['user'], default: 'user', required: true },
+    status: { type: String, enum: ['User'], default: 'user', required: true },
     created_at: { type: Number, default: Date.now, required: true }
 });
 
