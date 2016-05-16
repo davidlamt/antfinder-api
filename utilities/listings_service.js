@@ -20,4 +20,13 @@ listingUtils.getListings = () => {
     });
 };
 
+listingUtils.getListing = listingID => {
+    return new Promise((resolve, reject) => {
+        listingsModel.findById(listingID, (err, listing) => {
+            if (err || !listing || listing.length === 0) reject(err);
+            resolve(listing);
+        });
+    });
+};
+
 export default listingUtils;

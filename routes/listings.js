@@ -28,4 +28,12 @@ router.get('/', userAuth, (req, res) => {
     }, err => res.sendStatus(404));
 });
 
+router.get('/:id', adminAuth, (req, res) => {
+    const listingID = req.params.id;
+
+    listingUtils.getListing(listingID).then(listing => {
+        res.json(listing)
+    }, () => res.sendStatus(404));
+});
+
 module.exports = router;
