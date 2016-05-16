@@ -5,7 +5,7 @@ const usersUtils = {};
 usersUtils.createUser = (newUser) => {
     return new Promise((resolve, reject) => {
         usersModel.create(newUser, (err, createdUser) => {
-            if (err || !createdUser || createdUser.length === 0) reject();
+            if (err || !createdUser || createdUser.length === 0) reject(err);
             resolve(createdUser);
         });
     });
