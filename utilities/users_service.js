@@ -5,7 +5,7 @@ const usersUtils = {};
 usersUtils.createUser = (newUser) => {
     return new Promise((resolve, reject) => {
         usersModel.create(newUser, (err, createdUser) => {
-            if (err || !createdUser || createdUser.length === 0) reject();
+            if (err || !createdUser || createdUser.length === 0) reject(err);
             resolve(createdUser);
         });
     });
@@ -41,8 +41,25 @@ usersUtils.getUserByUsername = username => {
 usersUtils.updateUser = (userID, updatedUserInfo) => {
     return new Promise((resolve, reject) => {
         usersModel.findByIdAndUpdate(userID, updatedUserInfo, (err, updatedUser) => {
-
             if (err || !updatedUser || updatedUser.length === 0) reject();
+            resolve(updatedUser);
+        });
+    });
+};
+
+usersUtils.addListingToUser = (userID, newListingID) => {
+    return new Promise((resolve, reject) => {
+        usersModel.findByIdAndUpdate(userID, { $push: { 'listings': newListingID } }, (err, updatedUser) => {
+            if (err || !updatedUser || updatedUser.length === 0) reject(err);
+            resolve(updatedUser);
+        });
+    });
+};
+
+usersUtils.deleteListing = (userID, listingID) => {
+    return new Promise((resolve, reject) => {
+        usersModel.findByIdAndUpdate(userID, { $pull: { 'listings': listingID } }, (err, updatedUser) => {
+            if (err || !updatedUser || updatedUser.length === 0) reject(err);
             resolve(updatedUser);
         });
     });

@@ -8,7 +8,7 @@ export const userAuth = (req, res, next) => {
         else user = req.session.user[0];
     }
 
-    if (!req.session.user || (user.status !== 'user' && user.status !== 'admin')) return res.sendStatus(401);
+    if (!req.session.user || (user.status !== 'User' && user.status !== 'Admin')) return res.sendStatus(401);
 
     usersModel.find({ username: user.username }, (err, userFound) => {
         if (err || userFound.length === 0) return res.sendStatus(401);
