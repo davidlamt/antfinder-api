@@ -20,6 +20,15 @@ listingUtils.getListings = () => {
     });
 };
 
+listingUtils.getListingsForCurrentUser = (userID) => {
+    return new Promise((resolve, reject) => {
+        listingsModel.find({ creator: userID }, (err, listings) => {
+            if (err || !listings || listings.length === 0) reject(err);
+            resolve(listings);
+        });
+    });
+};
+
 listingUtils.getListing = listingID => {
     return new Promise((resolve, reject) => {
         listingsModel.findById(listingID, (err, listing) => {

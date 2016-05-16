@@ -28,6 +28,14 @@ router.get('/', userAuth, (req, res) => {
     }, err => res.sendStatus(404));
 });
 
+router.get('/current_user', userAuth, (req, res) => {
+    const user = req.session.user[0];
+
+    listingUtils.getListingsForCurrentUser(user._id).then(listings => {
+        res.json(listings);
+    }, err => res.sendStatus(404));
+});
+
 router.get('/:id', adminAuth, (req, res) => {
     const listingID = req.params.id;
 
