@@ -18,8 +18,14 @@ router.post('/', userAuth, (req, res) => {
     listingUtils.createListing(newListing).then(createdListing => {
         userUtils.addListingToUser(user._id, createdListing._id).then(updatedUser => {
             res.json(createdListing);
-        }, err => res.send(err));
-    }, err => res.send(err));
+        }, err => res.send(404));
+    }, err => res.send(500));
+});
+
+router.get('/', userAuth, (req, res) => {
+    listingUtils.getListings().then(listings => {
+        res.json(listings);
+    }, err => res.sendStatus(404));
 });
 
 module.exports = router;

@@ -11,4 +11,13 @@ listingUtils.createListing = newListing => {
     });
 };
 
+listingUtils.getListings = () => {
+    return new Promise((resolve, reject) => {
+        listingsModel.find({}, (err, listings) => {
+            if (err || !listings || listings.length === 0) reject(err);
+            resolve(listings);
+        });
+    });
+};
+
 export default listingUtils;
