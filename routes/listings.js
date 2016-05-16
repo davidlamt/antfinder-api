@@ -39,9 +39,20 @@ router.get('/current_user', userAuth, (req, res) => {
 router.get('/:id', userAuth, (req, res) => {
     const listingID = req.params.id;
 
-    listingUtils.getListingAndUpdateViewCount(listingID).then(listing => {
-        res.json(listing)
-    }, () => res.sendStatus(404));
+    listingUtils.getListingAndUpdateViewCount(listingID).then(updatedListing => {
+        res.json(updatedListing);
+    }, err => res.sendStatus(404));
+});
+
+router.delete('/:id', userAuth, (req, res) => {
+    const listingID = req.params.id;
+    const user = req.session.user[0];
+
+    listingUtils.deleteListing(user._id, listingID).then(deletedListing => {
+        userUtils.deleteListing(user._id, listingID).then(updatedUser => {
+            res.json(deletedListing);
+        }, err => res.sendStatus(500));
+    }, err => res.sendStatus(404));
 });
 
 module.exports = router;

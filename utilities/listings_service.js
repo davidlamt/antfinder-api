@@ -4,9 +4,9 @@ const listingUtils = {};
 
 listingUtils.createListing = newListing => {
     return new Promise((resolve, reject) => {
-        listingsModel.create(newListing, (err, createListing) => {
-            if (err || !createListing || createListing.length === 0) reject(err);
-            resolve(createListing);
+        listingsModel.create(newListing, (err, createdListing) => {
+            if (err || !createdListing || createdListing.length === 0) reject(err);
+            resolve(createdListing);
         });
     });
 };
@@ -40,9 +40,18 @@ listingUtils.getListing = listingID => {
 
 listingUtils.getListingAndUpdateViewCount = listingID => {
     return new Promise((resolve, reject) => {
-        listingsModel.findByIdAndUpdate(listingID, { $inc: { 'views': 1 } }, (err, listing) => {
-            if (err || !listing || listing.length === 0) reject(err);
-            resolve(listing);
+        listingsModel.findByIdAndUpdate(listingID, { $inc: { 'views': 1 } }, (err, updatedListing) => {
+            if (err || !updatedListing || updatedListing.length === 0) reject(err);
+            resolve(updatedListing);
+        });
+    });
+};
+
+listingUtils.deleteListing = (userID, listingID) => {
+    return new Promise((resolve, reject) => {
+        listingsModel.findOneAndRemove({ creator: userID, _id: listingID }, (err, deletedListing) => {
+            if (err || !deletedListing || deletedListing.length === 0) reject(err);
+            resolve(deletedListing);
         });
     });
 };

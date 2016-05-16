@@ -56,6 +56,15 @@ usersUtils.addListingToUser = (userID, newListingID) => {
     });
 };
 
+usersUtils.deleteListing = (userID, listingID) => {
+    return new Promise((resolve, reject) => {
+        usersModel.findByIdAndUpdate(userID, { $pull: { 'listings': listingID } }, (err, updatedUser) => {
+            if (err || !updatedUser || updatedUser.length === 0) reject(err);
+            resolve(updatedUser);
+        });
+    });
+};
+
 usersUtils.deleteUser = (userID) => {
     return new Promise((resolve, reject) => {
         usersModel.findByIdAndRemove(userID, (err, deletedUser) => {
