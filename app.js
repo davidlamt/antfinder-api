@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const authenticate = require('./routes/authenticate');
+const listings = require('./routes/listings');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 const user = require('./routes/user');
@@ -50,6 +51,7 @@ app.use(cors({ allowedOrigins }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/authenticate', authenticate);
+app.use('/listings', listings);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/user', user);
