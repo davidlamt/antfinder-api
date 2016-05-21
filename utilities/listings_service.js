@@ -13,7 +13,7 @@ listingUtils.createListing = newListing => {
 
 listingUtils.getListings = () => {
     return new Promise((resolve, reject) => {
-        listingsModel.find({}, (err, listings) => {
+        listingsModel.find({}).sort({ 'created_at': -1 }).exec((err, listings) => {
             if (err || !listings || listings.length === 0) reject(err);
             resolve(listings);
         });
@@ -22,7 +22,7 @@ listingUtils.getListings = () => {
 
 listingUtils.getListingsForCurrentUser = (userID) => {
     return new Promise((resolve, reject) => {
-        listingsModel.find({ creator: userID }, (err, listings) => {
+        listingsModel.find({ creator: userID }).sort({ 'created_at': -1 }).exec((err, listings) => {
             if (err || !listings || listings.length === 0) reject(err);
             resolve(listings);
         });
