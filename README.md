@@ -2,18 +2,15 @@
 The API used by the AntFinder application.
 
 ## Version
-**0.6**
+**1.0**
 
 ## Demo
-Working on building the API.
+API used on <a href="https://antfinder.herokuapp.com/" target="_blank">AntFinder Web App</a>
 
 ## Dependencies
 All dependencies are in the package.json file. Use the following command to install all of them:
 
 	npm install
-
-## Documentation
-Working on documenting the routes.
 
 ## License
 <a href="https://github.com/davidlamt/antfinder-api/blob/master/LICENSE" target="_blank">MIT License</a>
