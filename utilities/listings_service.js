@@ -20,6 +20,20 @@ listingUtils.getListings = () => {
     });
 };
 
+listingUtils.getListingsByTypeAndQuery = (listing_type, query) => {
+    const findParams = {};
+
+    if (listing_type !== 'All') findParams.listing_type = new RegExp(listing_type, 'i');
+    if (query !== 'undefined' && query !== '') findParams['$or'] = [ { title: new RegExp(query, 'i') }, { description: new RegExp(query, 'i') }];
+
+    return new Promise((resolve, reject) => {
+        listingsModel.find(findParams).sort({ 'created_at': -1 }).exec((err, listings) => {
+            if (err || !listings || listings.length === 0) reject(err);
+            resolve(listings);
+        });
+    });
+};
+
 listingUtils.getListingsForCurrentUser = (userID) => {
     return new Promise((resolve, reject) => {
         listingsModel.find({ creator: userID }).sort({ 'created_at': -1 }).exec((err, listings) => {
