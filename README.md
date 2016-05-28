@@ -2,7 +2,7 @@
 The API used by the AntFinder application.
 
 ## Version
-**1.0**
+**1.1**
 
 ## Demo
 API used on <a href="https://antfinder.herokuapp.com/" target="_blank">AntFinder Web App</a>
