@@ -23,9 +23,15 @@ router.post('/', userAuth, (req, res) => {
 });
 
 router.get('/', userAuth, (req, res) => {
-    listingUtils.getListings().then(listings => {
-        res.json(listings);
-    }, err => res.sendStatus(404));
+    if (req.query.listing_type === 'All' && (req.query.query === 'undefined' || req.query.query === '')) {
+        listingUtils.getListings().then(listings => {
+            res.json(listings);
+        }, err => res.sendStatus(404));
+    } else {
+        listingUtils.getListingsByTypeAndQuery(req.query.listing_type, req.query.query).then(listings => {
+            res.json(listings);
+        }, err => res.sendStatus(404));
+    }
 });
 
 router.get('/current_user', userAuth, (req, res) => {
